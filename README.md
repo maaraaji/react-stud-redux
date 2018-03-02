@@ -38,7 +38,6 @@ const rootReducer = (state = initialState, action) => {
         default: 
             return state;
     }
-    // console.log(action);
     return state;
 }
 ```
@@ -137,11 +136,17 @@ export default connect()(Counter);
 import { connect } from 'react-redux';
 class Counter extends Component {
     render () {
-        return <CounterOutput value={this.props.ctr} //The counter component will receive the state as props hence accessing like this.
+        //The counter component will receive the state from centra store via connect as props hence accessing like this.
+        return <CounterOutput value={this.props.ctr} 
     }
 }
-const mapStateToProps = state => {  //const name can be anything
-    return ({ctr: state.counter }); //it returns the jsx object, we will map the counter property of the state to counter locally here 
+//const name can be anything
+const mapStateToProps = state => {
+    return {
+        //it returns the jsx object, we will map the counter property of the state to counter locally here 
+        ctr: state.counter
+    }; 
 }
-export default connect(mapStateToProps)(Counter); //connect will return a function will take Counter component as its input and thus giving access Counter to mapStateToProps.
+//connect will return a function will take Counter component as its input and thus giving access Counter to mapStateToProps.
+export default connect(mapStateToProps)(Counter);
 ```
