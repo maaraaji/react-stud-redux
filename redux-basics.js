@@ -24,6 +24,9 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 counter : state.counter + action.value
             }
+            break;
+        default: 
+            return state;
     }
     // console.log(action);
     return state;
@@ -31,17 +34,27 @@ const rootReducer = (state = initialState, action) => {
 
 // Store
 // it will take reducer as the parameter.
+// Since it takes reducer as a parameter, the reducer needs to be created and available before creating the store.
 const store = createStore(rootReducer);
-console.log(store.getState());
+// console.log(store.getState());
+
+// Subscriptions
+// It elminates the need to asking getState to understand the state change
+// It will inform me whenever the state changes if subscribe to it.
+// Subscribe take function as argument
+// Subscrition is setup right after the store is created so that we will get the details from initial state.
+store.subscribe( () => {
+    console.log(`You are subscribed and here is your detail`)
+    console.log(store.getState());
+})
 
 // Dispactch 
 // Dispatch Action - Code Dispatching an action
 // Action is an javascript object
 // 'type' property is must and important. The value is an unique identifier and the convention is use all UPPER CASE
 store.dispatch({type: 'INC_COUNTER'});
-console.log(store.getState());
+// console.log(store.getState());
 store.dispatch({type: 'ADD_COUNTER', value: 5});
-console.log(store.getState());
+// console.log(store.getState());
 
 
-// Subscriptions
