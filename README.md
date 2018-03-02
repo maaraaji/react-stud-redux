@@ -65,10 +65,13 @@ store.subscribe( () => {
 ### Dispactch 
 1. Dispatch Action - Code Dispatching an action
 2. Action is an javascript object
-3. 'type' property is must and important. The value is an unique identifier and the convention is use all UPPER CASE
+3. 'type' property is must and important. The value is an unique identifier and the convention is to use all UPPER CASE
 ```javascript
 store.dispatch({type: 'INC_COUNTER'});
 store.dispatch({type: 'ADD_COUNTER', value: 5});
 ```
 
 
+# Application conventions
+1. Most of the application will have their store created on the index.js file which will mount the root container App.js
+2. Also they will a seperate place to store the reducers.

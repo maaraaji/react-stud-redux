@@ -56,5 +56,3 @@ store.dispatch({type: 'INC_COUNTER'});
 // console.log(store.getState());
 store.dispatch({type: 'ADD_COUNTER', value: 5});
 // console.log(store.getState());
-
-
