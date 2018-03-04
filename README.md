@@ -157,15 +157,18 @@ export default connect(mapStateToProps)(Counter);
 ```javascript
 class Counter extends Component {
     render () {
-        //The counter component will receive the dispatch function through props hence accessing like this. This has the two-way binding to reducer.
-        return <CounterControl label="Increment" clicked={() => this.props.incCounterHandler()} />
+        //The counter component will receive the dispatch function through props hence accessing like this. The dispatch function will be same as we defined below. This has the two-way binding dispatch function which then be executed at reducers via action parameter by handling it through event here.
+        return <CounterControl label="Increment" clicked={this.props.incCounterHandler} />
     }
 }
 //mapDispatchToProps is a constant that return the Object which will have a key mapped to dispatch function
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter: () => dispatch(type: 'INCREMENT')
+        incCounterHandler: () => dispatch(type: 'INCREMENT')
     }
 }
+//By passing these two arguments, we are requesting both the slice of the state and dispatching action.
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+//If we just need to dispatach action but don't need a slice then, we can pass null as the slice needed
+export default connect(null, mapDispatchToProps)(Counter);
 ```
