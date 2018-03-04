@@ -72,6 +72,7 @@ store.dispatch({type: 'ADD_COUNTER', value: 5});
 
 
 # Application conventions
+![React Redux](react-redux.svg)
 ---
 #### Connecting the Redux to React
 1. Install redux from npm as dependency
@@ -94,7 +95,7 @@ import reducer from './store/reducer';
 const store = createStore(reducer);
 ```
 
-3. As mentioned above most scenarios, we will a seperate place to store the reducers. It is not mandatory but conventionaly way for easy use.
+3. As mentioned above most scenarios, we will need a seperate place to store the reducers. It is not mandatory but conventionaly way for easy use.
 ---
 #### Connecting the store to the React application
 4. We need to install react-redux as the depency to connect store to react
@@ -106,7 +107,7 @@ import { Provider } from 'react-redux';
 ReactDOM.render(<Provider><App/></Provider>, document.getElementById('App'));
 ```
 
-5. Provider is the helper component which allows us to inject the store into the React Component. For hooking up the provider component with the store, need to setup the property.
+5. Provider is the helper component which allows us to inject the store into the React Component. For hooking up the provider component with the store, need to setup the property that passes the created store.
     > the property name is store and we should pass the store to it
 ```javascript
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('App'));
@@ -149,4 +150,22 @@ const mapStateToProps = state => {
 }
 //connect will return a function will take Counter component as its input and thus giving access Counter to mapStateToProps.
 export default connect(mapStateToProps)(Counter);
+```
+
+#### Dispatching actions from within the component
+9. We can pass the second configuration mapDispatchToProps and pass it to connect function
+```javascript
+class Counter extends Component {
+    render () {
+        //The counter component will receive the dispatch function through props hence accessing like this. This has the two-way binding to reducer.
+        return <CounterControl label="Increment" clicked={() => this.props.incCounterHandler()} />
+    }
+}
+//mapDispatchToProps is a constant that return the Object which will have a key mapped to dispatch function
+const mapDispatchToProps = dispatch => {
+    return {
+        onIncrementCounter: () => dispatch(type: 'INCREMENT')
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 ```
