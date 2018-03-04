@@ -42,7 +42,7 @@ class Counter extends Component {
                 <button onClick={this.props.logResultHandler}>Log Result</button>
                 <ul>
                     {this.props.loggedResult.map(log => (
-                        <li  id={log.id} onClick={this.props.delLogResultHandler}>{log.value}</li>
+                        <li  key={log.id} onClick={() => this.props.delLogResultHandler(log.id)}>{log.value}</li>
                     ))}
                 </ul>
             </div>
@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => {
         addFiveCounterHandler: () => dispatch({type: 'ADD_FIVE', value: 5}),
         subFiveCounterHandler: () => dispatch({type: 'SUB_FIVE', value: 5}),
         logResultHandler: () => dispatch({type: 'LOG_RESULT'}),
-        delLogResultHandler: () => dispatch({type: 'DEL_LOG_RESULT'})
+        delLogResultHandler: (id) => dispatch({type: 'DEL_LOG_RESULT', id: id})
     }
 }
 
