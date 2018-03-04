@@ -172,3 +172,31 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 //If we just need to dispatach action but don't need a slice then, we can pass null as the slice needed
 export default connect(null, mapDispatchToProps)(Counter);
 ```
+---
+#### Outsourcing the action types.
+10. It is best practise to outsource the action types to a separate file and importing them into reducers and the component which will dispatch actions. This will eliminate the TYPO that likely to occur and highlight it to us on the development mode itself
+```javascript
+'./store/actions.js'
+export const INCREMENT = 'INCREMENT;
+
+'./store.reducer.js'
+//import all the exported const from actions.js as actionTypes object.
+import * as actionTypes from './actions';
+const reducer = ( state, action) => {
+    switch(action.type){
+        case actionTypes.INCREMENT:
+        DO SOMETHING
+        return state
+    }
+}
+export default reducer
+
+'./containers/Counter/Counter.js'
+//import all the exported const from actions.js as actionTypes object.
+import * as actionTypes from './actions';
+const mapDispatchToProps = dispatch => {
+    return {
+        incCounterHandler: () => dispatch({type: actionTypes.INCREMENT})
+    }
+}
+export default connect(null, mapDispatchToProps)(Counter)

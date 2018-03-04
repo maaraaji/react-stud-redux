@@ -1,3 +1,5 @@
+import * as actionTypes from './actions';
+
 const initialState = {
     counter: 177,
     logs: []
@@ -5,27 +7,27 @@ const initialState = {
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type){
-        case "INCREMENT":
+        case actionTypes.INCREMENT:
             return {
                 ...state,
                 counter: state.counter + 1
             }
-        case "DECREMENT":
+        case actionTypes.DECREMENT:
             return {
                 ...state,
                 counter: state.counter - 1
             }
-        case "ADD_FIVE":
+        case actionTypes.ADD_FIVE:
             return {
                 ...state,
                 counter: state.counter + action.value
             }
-        case "SUB_FIVE":
+        case actionTypes.SUB_FIVE:
             return {
                 ...state,
                 counter: state.counter - action.value
             }
-        case "LOG_RESULT":
+        case actionTypes.LOG_RESULT:
             //mutating the object can be done as below
             // const updatedState = object.assign({}, state);
             // as a another way, it can be copied using spread operator
