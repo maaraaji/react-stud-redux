@@ -177,7 +177,7 @@ export default connect(null, mapDispatchToProps)(Counter);
 10. It is best practise to outsource the action types to a separate file and importing them into reducers and the component which will dispatch actions. This will eliminate the TYPO that likely to occur and highlight it to us on the development mode itself
 ```javascript
 './store/actions.js'
-export const INCREMENT = 'INCREMENT;
+export const INCREMENT = 'INCREMENT';
 
 './store.reducer.js'
 //import all the exported const from actions.js as actionTypes object.
@@ -249,8 +249,8 @@ class Counter extends Component {
 #### Understanding state types and determining when to use redux more sensibly.
 14. You can use redux to store and manage your state for all kind of components and information however, using it sensibly will reduce the overload of setting up the redux and will help in speedy programming. Some of the state scenario and their necessity to use redux is briefed below.
 
-|---|---|---|---|
 |Type|Example|Use Redux?|Determination|
+|---|---|---|---|
 |Local UI State | Show/Hide Backdrops | Mostly Handled within components | 
 |Persistent State | Server Side DB info - All Users, All Posts | Stored on the server only slices (current user, current posts) which needs to be rendered will be managed by Redux | Redux is to manage the state as long as the application is live (refresh will kill)|
 |Client State|Is User Authenticated? Filters to veiw specific posts | Managed via Redux | Cannot be maintained on server side as isAuth? will not always be true|
