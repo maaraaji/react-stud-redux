@@ -246,3 +246,11 @@ class Counter extends Component {
     }
 }
 ```
+#### Understanding state types and determining when to use redux more sensibly.
+14. You can use redux to store and manage your state for all kind of components and information however, using it sensibly will reduce the overload of setting up the redux and will help in speedy programming. Some of the state scenario and their necessity to use redux is briefed below.
+
+|---|---|---|---|
+|Type|Example|Use Redux?|Determination|
+|Local UI State | Show/Hide Backdrops | Mostly Handled within components | 
+|Persistent State | Server Side DB info - All Users, All Posts | Stored on the server only slices (current user, current posts) which needs to be rendered will be managed by Redux | Redux is to manage the state as long as the application is live (refresh will kill)|
+|Client State|Is User Authenticated? Filters to veiw specific posts | Managed via Redux | Cannot be maintained on server side as isAuth? will not always be true|
