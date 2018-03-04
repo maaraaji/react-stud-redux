@@ -200,3 +200,49 @@ const mapDispatchToProps = dispatch => {
     }
 }
 export default connect(null, mapDispatchToProps)(Counter)
+```
+---
+#### Having multiple reducers and combining multiple reducers
+11. Redux gives us a helper function called *combineReducers* from 'react' to combine multiple reducers to one reducers and store will handle only one reducer
+
+12. Conventionally we can have a separated folder reducers in store and have the reducers created within it.
+
+13. combineReducers is a function which takes javascript object mapping our redcuers that has different slices of our state as input and merges them into one state and one reducer.
+>combineReducers(reducers: ReducerMapObject): (state: any, action: AnyAction) => any
+```javascript
+import counterReducer from './store/reducers/counter';
+import logsReducer from './store/reducers/logs';
+import { createStore, combineReducers} from 'redux';
+
+//rooReducer is a new function of combineReducers that takes our other two reducers as object input
+const rootReducer = combineReducers({
+    counter: counterReducer,
+    logs: logsReducer
+});
+
+const store = createStore(rootReducer);
+```
+
+> At the end, we will have only one state since we are combining all reducers however to avoid naming conflicts between the reducers, redux add one level of nesting to the reducer keys that we define in the input. In above case, the counterReducer objects can be access through counter.objects & logsReducer can be accessed through logs.objects. Example
+```javascript
+'./store/reducers/counter.js'
+const initState = {
+    counterValue: 100
+}
+const counterReducer = ( state = initState, action ) => {
+    return state
+}
+export default CounterReducer
+
+'./container/Counter/Counter.js'
+class Counter extends Component {
+    render() {
+        return (
+            //this.props since the state is passed as props via Provider
+            //this.props.counter to access the counter object that has counterReducer as value in the rootReducer
+            //this.props.counter.counterValue to access the counterValue set at the state maintained by counterReducer
+            <p>{this.props.counter.counterValue}</p>
+        )
+    }
+}
+```

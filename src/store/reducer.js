@@ -28,7 +28,7 @@ const reducer = ( state = initialState, action ) => {
                 counter: state.counter - action.value
             }
         case actionTypes.LOG_RESULT:
-            //mutating the object can be done as below
+            // mutating the object can be done as below
             // const updatedState = object.assign({}, state);
             // as a another way, it can be copied using spread operator
             return {

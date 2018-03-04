@@ -5,11 +5,17 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 //Redux
-import { createStore } from 'redux';
-import reducer from './store/reducer';
+import { createStore, combineReducers } from 'redux';
+import counterReducer from './store/reducers/counter';
+import logsReducer from './store/reducers/logs';
 import { Provider } from 'react-redux';
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    counter: counterReducer,
+    logs: logsReducer
+})
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

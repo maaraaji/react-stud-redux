@@ -31,20 +31,19 @@ class Counter extends Component {
     }
 
     render () {
-        console.log(this.props);
         return (
             <div className="Counter">
-                <CounterOutput value={this.props.ctr} />
+                <CounterOutput value={this.props.ctr.counterValue} />
                 <CounterControl label="Increment" clicked={this.props.incCounterHandler} />
                 <CounterControl label="Decrement" clicked={() => this.props.decCounterHandler()}  />
                 <CounterControl label="Add 5" clicked={this.props.addFiveCounterHandler}  />
                 <CounterControl label="Subtract 5" clicked={this.props.subFiveCounterHandler}  />
                 <hr/>
-                <button onClick={this.props.logResultHandler}>Log Result</button>
+                <button onClick={() => this.props.logResultHandler(this.props.ctr.counterValue)}>Log Result</button>
                 <ul>
-                    {this.props.loggedResult.map(log => (
-                        <li  key={log.id} onClick={() => this.props.delLogResultHandler(log.id)}>{log.value}</li>
-                    ))}
+                    {this.props.loggedResult.logs.map(log => (
+                            <li  key={log.id} onClick={() => this.props.delLogResultHandler(log.id)}>{log.value}</li>
+                        ))}
                 </ul>
             </div>
         );
@@ -64,7 +63,7 @@ const mapDispatchToProps = dispatch => {
         decCounterHandler: () => dispatch({type: actionTypes.DECREMENT}),
         addFiveCounterHandler: () => dispatch({type: actionTypes.ADD_FIVE, value: 5}),
         subFiveCounterHandler: () => dispatch({type: actionTypes.SUB_FIVE, value: 5}),
-        logResultHandler: () => dispatch({type: actionTypes.LOG_RESULT}),
+        logResultHandler: (value) => dispatch({type: actionTypes.LOG_RESULT, value: value}),
         delLogResultHandler: (id) => dispatch({type: actionTypes.DEL_LOG_RESULT, id: id})
     }
 }
