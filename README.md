@@ -254,3 +254,42 @@ class Counter extends Component {
 |Local UI State | Show/Hide Backdrops | Mostly Handled within components | 
 |Persistent State | Server Side DB info - All Users, All Posts | Stored on the server only slices (current user, current posts) which needs to be rendered will be managed by Redux | Redux is to manage the state as long as the application is live (refresh will kill)|
 |Client State|Is User Authenticated? Filters to veiw specific posts | Managed via Redux | Cannot be maintained on server side as isAuth? will not always be true|
+
+---
+
+# Advanced Redux
+#### Applying Middleware
+
+![Middleware](middleware.svg)
+
+Middle will get hook into the process & it will allow the process continue to work as it is, however it can alter the process as well. In Redux, middlewares are applying between dispatch & reducers function where the actions will be dispatched from dispatchers & reach Reducer through middleware. It will be important to execute any asynchronous code.
+
+##### Applying a simple self-created middleware
+Middleware is predominently a function, it will get store as an input. If we connect our middle to the store using function provided by redux, it will execute this function and give us the store
+
+![applyMiddleware](applymiddleware.svg)
+
+```javascript
+'@ ./src/index.js'
+import { createStore, applyMiddleware } from 'redux';
+// if we connect this middle using the function provided by redux, it will execute our middle ware function and give us the store,
+// hence passing store as an argument to this function body
+const logger = store => {
+    console.log('[logger function] that gets store ', store);
+    // we will return another function called next (name is upto you, since we are telling it what to do next we name it as next)
+    return next => {
+        console.log('[function] that get next as argument ', next)
+        // the next function will return another function by giving the action that we dispatch to it
+        return action => {
+            console.log('[function] that gets action as argument ', action)
+            // from here we will have action to next as well as action as well as store. So we can modify both before we giving it to reducer but need
+            // to do it with caution as it will break the work-flow.
+            const result = next(action);
+            console.log('[Middleware] next state ', store.getState());
+            // we are sumply calling the next function with action as argument to proceed with its normal workflow to reducer.
+            return result;
+        }
+    }
+}
+const store = createStore(rootReducer, applyMiddleware(logger));
+```
