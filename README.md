@@ -41,6 +41,13 @@ const rootReducer = (state = initialState, action) => {
     return state;
 }
 ```
+A *reducer* (also called a *reducing function*) is a function that accepts an accumulation and a value and returns a new accumulation. They are used to reduce a collection of values down to a single value.
+
+Reducers are not unique to Redux—they are a fundamental concept in functional programming.  Even most non-functional languages, like JavaScript, have a built-in API for reducing. In JavaScript, it's `Array.prototype.reduce()`.
+
+In Redux, the accumulated value is the state object, and the values being accumulated are actions. Reducers calculate a new state given the previous state and an action. They must be *pure functions*—functions that return the exact same output for given inputs. They should also be free of side-effects. This is what enables exciting features like hot reloading and time travel.
+
+Reducers are the most important concept in Redux.
 
 ### Store
 1. it will take reducer as the parameter.
@@ -292,4 +299,30 @@ const logger = store => {
     }
 }
 const store = createStore(rootReducer, applyMiddleware(logger));
+```
+
+## Aysnchronous code
+The asynchronours code is the code that will take some time to get determined due to server side delay or latency over network.
+
+Reducers should not cause side effects since it has the features like hot reloading and time travel. We can execute the Asynchronous code with the help of action creators and middlewares.
+
+#### Action Creators
+Instead of using Action Identifiers, we can use the Action creators. Action creator is a function that returns an action object. Predominently, instead of hardcodin the actions to dispatch function at the components/container, we can use action creators to return that action to dispatch.
+
+```javascript
+'@ ./actions/actions.js'
+export const INCREMENT = 'INCREMENT';
+export const ADD_FIVE = 'ADD_FIVE';
+export const increment = () => {
+    return {
+        type: INCREMENT
+    }
+}
+
+export const logResult = (value) => {
+    return {
+        type: LOG_RESULT,
+        value: value
+    }
+}
 ```
