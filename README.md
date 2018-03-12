@@ -326,3 +326,46 @@ export const logResult = (value) => {
     }
 }
 ```
+
+#### `thunk` middleware
+`redux-thunk` is a library which adds middleware to our application which will allow us to write action creators that return a function instead of an action.
+
+What does it do? just as below,
+```javascript
+'@ ./index.js'
+//THUNK alike custom middleware
+// By default, the applyMiddleware wrapper will give the store to our middleware
+const logger = store => {
+    // store have dispatch (next argument here) function (initiated by our component which have action object) and getState function
+    return dispatch => { 
+        // we are taking the action object parameter from dispatch and passing it to the function where we can manupulate it before it is getting passed to reducer
+        action => {
+            // if action is a function, then execute that function passing them the state & dispatch. You would've created an action creator that returns function to match this situation and returning the object there after performing aysnchronous task. See below action.js code
+            if (typeof action === 'function' ){
+                return action(dispatch, store.getState);
+            }
+            // if action is an object then pass it to reducer through dispatch function
+            dispatch(action);
+        }
+    }
+}
+
+
+'@ ./actions/actions.js'
+const asyncLogResult = (resultValue) => {
+    return {
+        type: LOG_RESULT,
+        value: resultValue
+    }
+}
+
+// this is the actionCreator function that receives value as argument passed by the component to dispatch function and it returns function instead of object
+export const logResult = (value) => {
+    // we will receive the dispatch from the middle when it called this actionCreator function by passing state & dispatch. See above logger function.
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(asyncLogResult(value))
+        }, 2000);
+    }
+}
+```
